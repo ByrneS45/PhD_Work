@@ -1,0 +1,81 @@
+#
+# chatfile for GTMerge
+#
+
+echo
+
+#---------------------------------------
+# max coincidence events to create, listing etc
+
+maxNoEvents 200000000000
+TSlistelen 5000 1 1
+#            |   | +-- last bigbuf
+#            |   +-- first bigbuf
+#            +-- max TS to write per file
+
+nprint 100
+
+#---------------------------------------
+# output chunck size (in Bytes)
+
+chunksiz 20000000000
+
+#---------------------------------------
+# wait for nn seconds for data to appear
+# (meant for on-line merging and sorting)
+
+;waitfordata 600
+
+#---------------------------------------
+# bigbuf size and wosize
+#    +--- big size makes program slow;
+#         but it may be necessary sometimes
+
+bigbufsize 99000
+wosize     50
+#  |
+#  +--- in percent of bigbufsize
+#       written out per buffer
+
+#---------------------------------------
+# how often should we write 
+# statistics to output
+
+reportinterval 100
+
+#---------------------------------------
+# TS jump recovery trigger limits
+# (if timestamps jumps outside these
+#  limits GTMerge will read forward to 
+#  try and recover, 0.1 to 1 sec seems to works)
+#  100000000 ==  1 sec
+#  100000    ==  1 ms
+#  100       ==  1 us
+#  1         == 10 ns
+# set really large if you have slow channels!!
+
+dts_min  -10000000000000
+dts_max   10000000000000
+
+dtsfabort 5
+dtsbabort 5
+#         |
+#         +----- abort recovery and accept TS
+#                after this many tries in a row
+
+#---------------------------------------
+# enable to zzip output data file
+# does not work at the moment
+
+;zzipout
+
+#---------------------------------------
+# TS manipulation
+
+#         +--- Apply to this GEB Id data
+#         |     +--- range of board/channel IDs
+#         |     |           +--- offset value
+;TSoffset 16 2308-2324,2329 -10
+#
+#---------------------------------------
+
